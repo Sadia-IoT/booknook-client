@@ -1,13 +1,13 @@
-
 import HeroSection from "@/components/HeroSection";
-import Navbar from "@/components/Navbar";
+import BooksSection from "@/components/BooksSection";
+
 
 export default function Home() {
   return (
     <>
-      <Navbar />
       <main>
         <HeroSection />
+        <BooksSection />
       </main>
     </>
   );

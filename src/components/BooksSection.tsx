@@ -20,7 +20,7 @@ export default function BooksSection() {
     const fetchBooks = async () => {
       try {
         const data = await getBooks();
-        console.log("Books from API:", data);
+
         setBooks(data);
       } catch (error) {
         console.error("Failed to fetch books:", error);

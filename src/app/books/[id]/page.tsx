@@ -1,6 +1,7 @@
-
 import Image from "next/image";
+import BorrowButton from "@/components/BorrowButton";
 
+export const instant = false;
 type Book = {
   _id: string;
   id: string;
@@ -9,6 +10,8 @@ type Book = {
   category: string;
   image: string;
   description: string;
+  userName: string;
+  userEmail: string;
   totalCopies: number;
   availableCopies: number;
 };
@@ -46,7 +49,7 @@ export default async function BookDetailsPage({
         width={640}
         height={800}
         unoptimized
-        className="h-[450px] w-full rounded-xl object-cover"
+        className="h-112.5 w-full rounded-xl object-cover"
       />
 
       <div>
@@ -54,21 +57,26 @@ export default async function BookDetailsPage({
           {book.category}
         </p>
 
-        <h1 className="text-3xl font-bold text-gray-900">
-          {book.title}
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900">{book.title}</h1>
 
-        <p className="mt-3 text-gray-600">
-          By {book.author}
-        </p>
+        <p className="mt-3 text-gray-600">By {book.author}</p>
 
-        <p className="mt-6 leading-7 text-gray-700">
-          {book.description}
-        </p>
+        <p className="mt-6 leading-7 text-gray-700">{book.description}</p>
 
         <div className="mt-8 space-y-2">
           <p>Total Copies: {book.totalCopies}</p>
           <p>Available Copies: {book.availableCopies}</p>
+          <div className="mt-6 rounded-xl bg-gray-50 p-4">
+            <h3 className="font-semibold text-gray-900">Added By</h3>
+
+            <p className="mt-2 text-sm text-gray-700">Name: {book.userName}</p>
+
+            <p className="mt-1 text-sm text-gray-700">
+              Email: {book.userEmail}
+            </p>
+          </div>
+          {/* Borrow Button */}
+          <BorrowButton availableCopies={book.availableCopies} />
         </div>
       </div>
     </main>

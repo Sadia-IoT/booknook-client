@@ -8,29 +8,39 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-const [isLoading, setIsLoading] = useState(false);
-const [errorMessage, setErrorMessage] = useState("");
-const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  setIsLoading(true);
-  setErrorMessage("");
+    setIsLoading(true);
+    setErrorMessage("");
 
-  const { error } = await authClient.signIn.email({
-    email,
-    password,
-  });
+    const { error } = await authClient.signIn.email({
+      email,
+      password,
+    });
 
-  setIsLoading(false);
+    setIsLoading(false);
 
-  if (error) {
-    setErrorMessage(error.message || "Login failed.");
-    return;
-  }
+    if (error) {
+      setErrorMessage(error.message || "Login failed.");
+      return;
+    }
 
-  router.push("/");
-  router.refresh();
-};
+    router.push("/");
+    router.refresh();
+  };
+  const handleGoogleLogin = async () => {
+    const { error } = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+
+    if (error) {
+      setErrorMessage(error.message || "Google login failed.");
+    }
+  };
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-10">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
@@ -73,19 +83,41 @@ const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
             />
           </div>
           {errorMessage && (
-  <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
-    {errorMessage}
-  </p>
-)}
+            <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+              {errorMessage}
+            </p>
+          )}
 
-         <button
-  type="submit"
-  disabled={isLoading}
-  className="w-full rounded-lg bg-green-700 py-3 font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-gray-400"
->
-  {isLoading ? "Logging in..." : "Login"}
-</button>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full rounded-lg bg-green-700 py-3 font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-gray-400"
+          >
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
         </form>
+        <div className="mt-5">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+
+            <div className="relative flex justify-center text-sm">
+              <span className="bg-white px-3 text-gray-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="mt-5 flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 py-3 font-medium text-gray-700 transition hover:bg-gray-50"
+          >
+            <span className="font-bold text-lg">G</span>
+            Continue with Google
+          </button>
+        </div>
       </div>
     </div>
   );

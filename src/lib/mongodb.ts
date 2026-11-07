@@ -1,6 +1,8 @@
 import dns from "dns";
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+dns.setServers(["1.1.1.1", "1.0.0.1"]);
+
+
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI;

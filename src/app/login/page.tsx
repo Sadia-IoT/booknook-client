@@ -21,15 +21,18 @@ export default function LoginPage() {
       password,
     });
 
-    setIsLoading(false);
+  
 
     if (error) {
       setErrorMessage(error.message || "Login failed.");
+      setIsLoading(false);
       return;
     }
 
-    router.push("/");
-    router.refresh();
+    await authClient.getSession();
+
+    setIsLoading(false);
+    router.replace("/");
   };
   const handleGoogleLogin = async () => {
     const { error } = await authClient.signIn.social({

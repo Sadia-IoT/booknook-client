@@ -12,7 +12,13 @@ type Book = {
   image: string;
 };
 
-export default function BooksSection() {
+type BooksSectionProps = {
+  title?: string;
+};
+
+export default function BooksSection({
+  title = "Featured Books",
+}: BooksSectionProps) {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,9 +40,7 @@ export default function BooksSection() {
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-16">
-      <h2 className="mb-8 text-3xl font-bold text-gray-900">
-        Featured Books
-      </h2>
+      <h2 className="mb-8 text-3xl font-bold text-gray-900">{title}</h2>
 
       {loading ? (
         <p>Loading books...</p>

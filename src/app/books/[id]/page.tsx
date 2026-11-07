@@ -1,5 +1,6 @@
 import Image from "next/image";
 import BorrowButton from "@/components/BorrowButton";
+import ProtectedPage from "@/components/ProtectedPage";
 
 export const instant = false;
 type Book = {
@@ -42,7 +43,8 @@ export default async function BookDetailsPage({
   }
 
   return (
-    <main className="mx-auto grid max-w-5xl gap-10 px-6 py-16 md:grid-cols-2">
+<ProtectedPage> 
+<main className="mx-auto grid max-w-5xl gap-10 px-6 py-16 md:grid-cols-2">
       <Image
         src={book.image}
         alt={book.title}
@@ -76,9 +78,10 @@ export default async function BookDetailsPage({
             </p>
           </div>
           {/* Borrow Button */}
-          <BorrowButton availableCopies={book.availableCopies} />
+          <BorrowButton bookId={book._id} availableCopies={book.availableCopies} />
         </div>
       </div>
     </main>
+    </ProtectedPage>
   );
 }

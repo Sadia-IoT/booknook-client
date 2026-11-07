@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BookOpen, Menu, Search, LogOut, User } from "lucide-react";
@@ -92,9 +93,11 @@ export default function Navbar() {
                 className="flex items-center gap-2 rounded-full border border-gray-200 p-1 pr-3 hover:bg-gray-100"
               >
                 {session.user.image ? (
-                  <img
+                  <Image
                     src={session.user.image}
                     alt={session.user.name}
+                    width={36}
+                    height={36}
                     className="h-9 w-9 rounded-full object-cover"
                   />
                 ) : (

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+ 
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -65,7 +66,7 @@ export default function RegisterPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 placeholder:text-gray-400 outline-none focus:border-green-600"
             />
           </div>
 

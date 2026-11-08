@@ -22,7 +22,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#e8e6df] bg-[#faf9f6]/95 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+      <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -135,17 +135,20 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Icon */}
-        <button
+        
+{/* Mobile Menu Icon */}
+<button
   onClick={() => setIsMenuOpen(!isMenuOpen)}
-  className="md:hidden text-[#174d38]"
+  className="flex items-center justify-center text-[#174d38] md:hidden"
   aria-label="Toggle menu"
   aria-expanded={isMenuOpen}
 >
   <Menu size={25} />
 </button>
+
+{/* Mobile Menu */}
 {isMenuOpen && (
-  <div className="border-t border-[#e8e6df] bg-[#faf9f6] px-5 py-4 md:hidden">
+  <div className="absolute left-0 top-full w-full border-t border-[#e8e6df] bg-[#faf9f6] px-5 py-4 shadow-md md:hidden">
     <div className="flex flex-col gap-4">
       <Link href="/" onClick={() => setIsMenuOpen(false)}>
         Home
@@ -193,6 +196,7 @@ export default function Navbar() {
     </div>
   </div>
 )}
+
       </nav>
     </header>
   );

@@ -12,6 +12,7 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+     console.log("Email login clicked");
 
     setIsLoading(true);
     setErrorMessage("");
@@ -35,6 +36,7 @@ export default function LoginPage() {
     router.replace("/");
   };
   const handleGoogleLogin = async () => {
+      console.log("Google login clicked");
     const { error } = await authClient.signIn.social({
       provider: "google",
       callbackURL: "/",

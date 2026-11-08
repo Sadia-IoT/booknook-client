@@ -1,0 +1,7 @@
+[33m4a4bdb6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m fix: enable trusted Google account linking
+[33m315ac36[m fix featured books api response
+[33m4babcb0[m Add session-based navigation links
+[33ma8c3bd4[m Add email password authentication
+[33m529aa9a[m feat: add book details page and view details navigation
+[33ma307592[m Build BookNook homepage hero section
+[33me00689d[m Initial commit from Create Next App

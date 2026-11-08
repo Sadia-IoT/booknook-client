@@ -25,6 +25,17 @@ export const getBooks = async () => {
 
   return Array.isArray(result.data) ? result.data : [];
 };
+export const getLatestBooks = async () => {
+  const response = await fetch(`${API_URL}/books?limit=6`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch latest books");
+  }
+
+  const result = await response.json();
+
+  return Array.isArray(result.data) ? result.data : [];
+};
 
 type BorrowData = {
   bookId: string;

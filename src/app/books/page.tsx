@@ -1,9 +1,9 @@
-import BooksSection from "@/components/BooksSection";
+import AllBooksSection from "@/components/AllBooksSection";
 
 export default function AllBooksPage() {
   return (
     <main className="min-h-screen bg-[#faf9f6]">
-      <BooksSection title="All Books" />
+      <AllBooksSection />
     </main>
   );
 }

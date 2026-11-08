@@ -20,16 +20,19 @@ export default function MyBorrowsPage() {
 
   const [borrows, setBorrows] = useState<Borrow[]>([]);
   const [loading, setLoading] = useState(true);
-  const handleReturnBook = async (borrowId: string) => {
-  try {
-    await returnBook(borrowId);
 
-    const data = await getMyBorrows(session!.user.email);
-    setBorrows(data);
-  } catch (error) {
-    console.error("Failed to return book:", error);
-  }
-};
+  const handleReturnBook = async (borrowId: string) => {
+    try {
+      await returnBook(borrowId);
+
+      if (!session?.user?.email) return;
+
+      const data = await getMyBorrows(session.user.email);
+      setBorrows(data);
+    } catch (error) {
+      console.error("Failed to return book:", error);
+    }
+  };
 
   useEffect(() => {
     if (!session?.user?.email) return;
@@ -82,8 +85,13 @@ export default function MyBorrowsPage() {
                     Return Date:{" "}
                     {new Date(borrow.returnDate).toLocaleDateString("en-GB")}
                   </p>
+               
+
                   <button
-  onClick={() => handleReturnBook(borrow._id)}
+  onClick={() =>{
+     console.log("Borrow ID:", borrow._id)
+     console.log("Book ID:", borrow.bookId); 
+    handleReturnBook(borrow._id);}}
   className="mt-4 w-full rounded-lg bg-[#174d38] px-4 py-3 font-semibold text-white transition hover:bg-[#103b2b]"
 >
   Return Book

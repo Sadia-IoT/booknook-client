@@ -136,9 +136,63 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Icon */}
-        <button className="md:hidden" aria-label="Open menu">
-          <Menu size={25} />
-        </button>
+        <button
+  onClick={() => setIsMenuOpen(!isMenuOpen)}
+  className="md:hidden text-[#174d38]"
+  aria-label="Toggle menu"
+  aria-expanded={isMenuOpen}
+>
+  <Menu size={25} />
+</button>
+{isMenuOpen && (
+  <div className="border-t border-[#e8e6df] bg-[#faf9f6] px-5 py-4 md:hidden">
+    <div className="flex flex-col gap-4">
+      <Link href="/" onClick={() => setIsMenuOpen(false)}>
+        Home
+      </Link>
+
+      <Link href="/books" onClick={() => setIsMenuOpen(false)}>
+        All Books
+      </Link>
+
+      {!isPending && session && (
+        <>
+          <Link href="/add-book" onClick={() => setIsMenuOpen(false)}>
+            Add Book
+          </Link>
+
+          <Link href="/my-books" onClick={() => setIsMenuOpen(false)}>
+            My Books
+          </Link>
+
+          <Link href="/my-borrows" onClick={() => setIsMenuOpen(false)}>
+            My Borrows
+          </Link>
+
+          <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
+            My Profile
+          </Link>
+
+          <button onClick={handleLogout} className="text-left text-red-600">
+            Logout
+          </button>
+        </>
+      )}
+
+      {!isPending && !session && (
+        <>
+          <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+            Login
+          </Link>
+
+          <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+            Register
+          </Link>
+        </>
+      )}
+    </div>
+  </div>
+)}
       </nav>
     </header>
   );

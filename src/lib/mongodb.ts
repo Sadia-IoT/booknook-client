@@ -1,8 +1,3 @@
-import dns from "dns";
-
-dns.setServers(["1.1.1.1", "1.0.0.1"]);
-
-
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
@@ -19,3 +14,4 @@ if (!dbName) {
 export const client = new MongoClient(uri);
 
 export const db = client.db(dbName);
+

@@ -1,5 +1,18 @@
+
+import { authClient } from "@/lib/auth-client";
+
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+const getAuthToken = async () => {
+  const { data, error } = await authClient.token();
+
+  if (error || !data?.token) {
+    throw new Error("Could not get access token");
+  }
+
+  return data.token;
+};
 
 export const getBooks = async () => {
   const response = await fetch(`${API_URL}/books`);
@@ -10,9 +23,8 @@ export const getBooks = async () => {
 
   const result = await response.json();
 
- return Array.isArray(result.data) ? result.data : [];
+  return Array.isArray(result.data) ? result.data : [];
 };
-
 
 type BorrowData = {
   bookId: string;
@@ -22,10 +34,13 @@ type BorrowData = {
 };
 
 export const borrowBook = async (data: BorrowData) => {
+  const token = await getAuthToken();
+
   const response = await fetch(`${API_URL}/borrows`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   });
@@ -38,9 +53,17 @@ export const borrowBook = async (data: BorrowData) => {
 
   return result;
 };
+
 export const getMyBorrows = async (email: string) => {
+  const token = await getAuthToken();
+
   const response = await fetch(
-    `${API_URL}/borrows?email=${encodeURIComponent(email)}`
+    `${API_URL}/borrows?email=${encodeURIComponent(email)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
 
   if (!response.ok) {
@@ -50,11 +73,17 @@ export const getMyBorrows = async (email: string) => {
   const result = await response.json();
   return result.data;
 };
+
 export const returnBook = async (borrowId: string) => {
+  const token = await getAuthToken();
+
   const response = await fetch(
     `${API_URL}/borrows/${borrowId}/return`,
     {
       method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 
@@ -66,6 +95,5 @@ export const returnBook = async (borrowId: string) => {
 
   return result;
 };
-
 
 export default API_URL;

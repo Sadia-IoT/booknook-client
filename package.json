@@ -17,6 +17,7 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-hot-toast": "^2.6.1",
+    "resend": "^6.37.0",
     "swiper": "^14.4.0"
   },
   "devDependencies": {

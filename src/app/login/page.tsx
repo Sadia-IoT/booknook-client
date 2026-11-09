@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,17 +31,23 @@ export default function LoginPage() {
       return;
     }
 
-    await authClient.getSession();
+await authClient.getSession();
 
-    setIsLoading(false);
-    router.replace("/");
+const callbackURL =
+  new URLSearchParams(window.location.search).get("callbackURL") || "/";
+
+setIsLoading(false);
+router.replace(callbackURL);
   };
   const handleGoogleLogin = async () => {
       console.log("Google login clicked");
-    const { error } = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-    });
+ const callbackURL =
+  new URLSearchParams(window.location.search).get("callbackURL") || "/";
+
+  const { error } = await authClient.signIn.social({
+  provider: "google",
+  callbackURL,
+  });
 
     if (error) {
       setErrorMessage(error.message || "Google login failed.");
@@ -87,6 +94,14 @@ export default function LoginPage() {
               className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600"
             />
           </div>
+          <div className="flex justify-end">
+  <Link
+    href="/forgot-password"
+    className="text-sm font-medium text-green-700 hover:underline"
+  >
+    Forgot Password?
+  </Link>
+</div>
           {errorMessage && (
             <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
               {errorMessage}
@@ -101,6 +116,15 @@ export default function LoginPage() {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
+        <p className="mt-5 text-center text-sm text-gray-600">
+  Don&apos;t have an account?{" "}
+  <Link
+    href="/register"
+    className="font-semibold text-green-700 hover:underline"
+  >
+    Register
+  </Link>
+</p>
         <div className="mt-5">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">

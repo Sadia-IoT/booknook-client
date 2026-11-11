@@ -54,8 +54,7 @@ export default function BookCard({
 
         <Link
           href={`/books/${id}`}
-          className="mt-auto block rounded-lg bg-green-700 px-4 py-3 text-center font-medium text-white transition hover:bg-green-800"
-        >
+          className="mt-auto block rounded-lg bg-green-700 px-4 py-3 text-center font-medium text-white transition hover:bg-green-800">
           View Details
         </Link>
       </div>

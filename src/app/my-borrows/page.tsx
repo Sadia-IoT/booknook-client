@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { authClient } from "@/lib/auth-client";
 import { getMyBorrows, returnBook } from "@/lib/api";
+import { toast } from "react-hot-toast/headless";
 
 type Borrow = {
   _id: string;
@@ -20,19 +21,24 @@ export default function MyBorrowsPage() {
 
   const [borrows, setBorrows] = useState<Borrow[]>([]);
   const [loading, setLoading] = useState(true);
+const handleReturnBook = async (borrowId: string) => {
+  try {
+    await returnBook(borrowId);
 
-  const handleReturnBook = async (borrowId: string) => {
-    try {
-      await returnBook(borrowId);
+    toast.success("Book returned successfully!");
 
-      if (!session?.user?.email) return;
+    if (!session?.user?.email) return;
 
-      const data = await getMyBorrows(session.user.email);
-      setBorrows(data);
-    } catch (error) {
-      console.error("Failed to return book:", error);
-    }
-  };
+    const data = await getMyBorrows(session.user.email);
+    setBorrows(data);
+  } catch (error) {
+    toast.error(
+      error instanceof Error
+        ? error.message
+        : "Failed to return book"
+    );
+  }
+};
 
   useEffect(() => {
     if (!session?.user?.email) return;

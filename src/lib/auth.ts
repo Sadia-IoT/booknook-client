@@ -6,6 +6,9 @@ import { Resend } from "resend";
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+console.log("BETTER_AUTH_URL:", process.env.BETTER_AUTH_URL);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+
 export const auth = betterAuth({
   baseURL:
     process.env.BETTER_AUTH_URL || "http://localhost:3000",

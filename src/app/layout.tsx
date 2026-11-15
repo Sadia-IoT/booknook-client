@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 export const metadata: Metadata = {
   title: {
     default: "BookNook | Your Digital Library",
-    template: "%s | BookNook",
+    template: "BookNook | %s",
   },
   description:
     "Discover, borrow, and manage your favorite books with BookNook.",

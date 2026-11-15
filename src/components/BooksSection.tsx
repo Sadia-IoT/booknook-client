@@ -52,9 +52,12 @@ export default function BooksSection() {
 
       {/* Loading */}
       {loading ? (
-        <p className="py-10 text-center text-gray-500">
-          Loading latest books...
-        </p>
+        <div className="flex flex-col items-center justify-center py-10">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-green-200 border-t-green-700"></div>
+          <p className="py-10 text-center text-gray-500">
+            Loading latest books...
+          </p>
+        </div>
       ) : books.length === 0 ? (
         <p className="py-10 text-center text-gray-500">
           No books available yet.

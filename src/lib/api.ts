@@ -1,8 +1,6 @@
-
 import { authClient } from "@/lib/auth-client";
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 const getAuthToken = async () => {
   const { data, error } = await authClient.token();
@@ -74,7 +72,7 @@ export const getMyBorrows = async (email: string) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 
   if (!response.ok) {
@@ -88,15 +86,12 @@ export const getMyBorrows = async (email: string) => {
 export const returnBook = async (borrowId: string) => {
   const token = await getAuthToken();
 
-  const response = await fetch(
-    `${API_URL}/borrows/${borrowId}/return`,
-    {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await fetch(`${API_URL}/borrows/${borrowId}/return`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   const result = await response.json();
 
@@ -110,6 +105,8 @@ type AddBookData = {
   title: string;
   author: string;
   totalCopies: number;
+  availableCopies?: number;
+  userName: string;
   userEmail: string;
   image?: string;
   category?: string;
@@ -135,7 +132,7 @@ export const addBook = async (data: AddBookData) => {
 };
 export const getMyBooks = async (email: string) => {
   const response = await fetch(
-    `${API_URL}/books?email=${encodeURIComponent(email)}`
+    `${API_URL}/books?email=${encodeURIComponent(email)}`,
   );
 
   if (!response.ok) {
@@ -155,7 +152,7 @@ export const updateBook = async (
     description?: string;
     image?: string;
     totalCopies: number;
-  }
+  },
 ) => {
   const response = await fetch(`${API_URL}/books/${id}`, {
     method: "PATCH",
@@ -208,10 +205,10 @@ type GoogleBooksItem = {
 };
 
 export const searchGoogleBooks = async (
-  query: string
+  query: string,
 ): Promise<GoogleBook[]> => {
   const response = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`
+    `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`,
   );
 
   if (!response.ok) {
@@ -228,10 +225,7 @@ export const searchGoogleBooks = async (
       title: book?.title || "",
       author: book?.authors?.join(", ") || "Unknown Author",
       description: book?.description || "",
-      image: (book?.imageLinks?.thumbnail || "").replace(
-        "http://",
-        "https://"
-      ),
+      image: (book?.imageLinks?.thumbnail || "").replace("http://", "https://"),
       category: book?.categories?.[0] || "General",
     };
   });

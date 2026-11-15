@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -50,8 +49,7 @@ export default function AllBooksSection() {
       book.author.toLowerCase().includes(search.toLowerCase());
 
     const matchesCategory =
-      selectedCategory === "All" ||
-      book.category === selectedCategory;
+      selectedCategory === "All" || book.category === selectedCategory;
 
     return matchesSearch && matchesCategory;
   });

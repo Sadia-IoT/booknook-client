@@ -1,7 +1,6 @@
-
 "use client";
 
-import { Suspense,useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -104,14 +103,18 @@ function ResetPasswordform() {
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
-          <Link href="/login" className="font-semibold text-green-700 hover:underline">
+          <Link
+            href="/login"
+            className="font-semibold text-green-700 hover:underline"
+          >
             Back to Login
           </Link>
         </p>
       </div>
     </div>
   );
-}export default function ResetPasswordPage() {
+}
+export default function ResetPasswordPage() {
   return (
     <Suspense
       fallback={

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -39,34 +38,30 @@ export default function ProfilePage() {
   };
 
   return (
-    <ProtectedRoute>
-      <main className="mx-auto min-h-screen max-w-xl px-5 py-16">
-        <h1 className="mb-6 text-3xl font-bold">My Profile</h1>
+    <main className="mx-auto min-h-screen max-w-xl px-5 py-16">
+      <h1 className="mb-6 text-3xl font-bold">My Profile</h1>
 
-        <p className="mb-2 text-gray-600">
-          Email: {session?.user?.email}
-        </p>
+      <p className="mb-2 text-gray-600">Email: {session?.user?.email}</p>
 
-        <form onSubmit={handleUpdate} className="space-y-4">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-            className="w-full rounded-lg border px-4 py-3"
-          />
+      <form onSubmit={handleUpdate} className="space-y-4">
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your name"
+          className="w-full rounded-lg border px-4 py-3"
+        />
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="rounded-lg bg-green-700 px-6 py-3 font-semibold text-white"
-          >
-            {isLoading ? "Updating..." : "Update Name"}
-          </button>
-        </form>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="rounded-lg bg-green-700 px-6 py-3 font-semibold text-white"
+        >
+          {isLoading ? "Updating..." : "Update Name"}
+        </button>
+      </form>
 
-        {message && <p className="mt-4">{message}</p>}
-      </main>
-    </ProtectedRoute>
+      {message && <p className="mt-4">{message}</p>}
+    </main>
   );
 }

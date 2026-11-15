@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
- 
+import { toast } from "react-hot-toast";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -16,11 +16,24 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const handleGoogleLogin = async () => {
+    const { error } = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+
+    if (error) {
+      setErrorMessage(error.message || "Google login failed.");
+      toast.error(error.message || "Google login failed.");
+    }
+  };
+
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isValidPassword) {
       setErrorMessage("Please enter a valid password.");
+      toast.error("Please enter a valid password.");
       return;
     }
 
@@ -38,10 +51,12 @@ export default function RegisterPage() {
 
     if (error) {
       setErrorMessage(error.message || "Registration failed.");
+      toast.error(error.message || "Registration failed.");
       return;
     }
 
-    router.push("/");
+    toast.success("Account created successfully! Please log in.");
+    router.push("/login");
     router.refresh();
   };
 
@@ -63,6 +78,7 @@ export default function RegisterPage() {
             </label>
             <input
               type="text"
+              required
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
@@ -76,6 +92,7 @@ export default function RegisterPage() {
             </label>
             <input
               type="email"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
@@ -102,6 +119,7 @@ export default function RegisterPage() {
             </label>
             <input
               type="password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Create a password"
@@ -116,19 +134,44 @@ export default function RegisterPage() {
           </div>
 
           {errorMessage && (
-  <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
-    {errorMessage}
-  </p>
-)}
+            <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+              {errorMessage}
+            </p>
+          )}
 
           <button
-  type="submit"
-  disabled={isLoading || !isValidPassword}
-  className="w-full rounded-lg bg-green-700 py-3 font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-gray-400"
->
-  {isLoading ? "Creating Account..." : "Create Account"}
-</button>
+            type="submit"
+            disabled={isLoading || !isValidPassword}
+            className="w-full rounded-lg bg-green-700 py-3 font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-gray-400"
+          >
+            {isLoading ? "Creating Account..." : "Create Account"}
+          </button>
         </form>
+        <p className="mt-5 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <a
+            href="/login"
+            className="font-semibold text-green-700 hover:underline"
+          >
+            Login
+          </a>
+        </p>
+        <div className="mt-5">
+          <div className="relative flex items-center justify-center">
+            <span className="bg-white px-3 text-sm text-gray-500">
+              Or continue with
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="mt-4 flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 py-3 font-medium text-gray-700 transition hover:bg-gray-50"
+          >
+            <span className="text-lg font-bold">G</span>
+            Continue with Google
+          </button>
+        </div>
       </div>
     </div>
   );

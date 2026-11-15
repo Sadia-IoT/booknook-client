@@ -23,7 +23,6 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#e8e6df] bg-[#faf9f6]/95 backdrop-blur-md">
       <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="rounded-xl bg-[#174d38] p-2 text-white">
@@ -36,31 +35,40 @@ export default function Navbar() {
         </Link>
 
         {/* Navigation Links */}
-       <div className="hidden items-center gap-8 md:flex">
-  <Link href="/" className="font-medium text-[#174d38]">
-    Home
-  </Link>
+        <div className="hidden items-center gap-8 md:flex">
+          <Link href="/" className="font-medium text-[#174d38]">
+            Home
+          </Link>
 
-  <Link href="/books" className="text-gray-600 hover:text-[#174d38]">
-    All Books
-  </Link>
+          <Link href="/books" className="text-gray-600 hover:text-[#174d38]">
+            All Books
+          </Link>
 
-  {!isPending && session && (
-    <>
-      <Link href="/add-book" className="text-gray-600 hover:text-[#174d38]">
-        Add Book
-      </Link>
+          {!isPending && session && (
+            <>
+              <Link
+                href="/add-book"
+                className="text-gray-600 hover:text-[#174d38]"
+              >
+                Add Book
+              </Link>
 
-      <Link href="/my-books" className="text-gray-600 hover:text-[#174d38]">
-        My Books
-      </Link>
+              <Link
+                href="/my-books"
+                className="text-gray-600 hover:text-[#174d38]"
+              >
+                My Books
+              </Link>
 
-      <Link href="/my-borrows" className="text-gray-600 hover:text-[#174d38]">
-        My Borrows
-      </Link>
-    </>
-  )}
-</div>
+              <Link
+                href="/my-borrows"
+                className="text-gray-600 hover:text-[#174d38]"
+              >
+                My Borrows
+              </Link>
+            </>
+          )}
+        </div>
 
         {/* Actions */}
         <div className="hidden items-center gap-4 md:flex">
@@ -135,68 +143,69 @@ export default function Navbar() {
           )}
         </div>
 
-        
-{/* Mobile Menu Icon */}
-<button
-  onClick={() => setIsMenuOpen(!isMenuOpen)}
-  className="flex items-center justify-center text-[#174d38] md:hidden"
-  aria-label="Toggle menu"
-  aria-expanded={isMenuOpen}
->
-  <Menu size={25} />
-</button>
+        {/* Mobile Menu Icon */}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="flex items-center justify-center text-[#174d38] md:hidden"
+          aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
+        >
+          <Menu size={25} />
+        </button>
 
-{/* Mobile Menu */}
-{isMenuOpen && (
-  <div className="absolute left-0 top-full w-full border-t border-[#e8e6df] bg-[#faf9f6] px-5 py-4 shadow-md md:hidden">
-    <div className="flex flex-col gap-4">
-      <Link href="/" onClick={() => setIsMenuOpen(false)}>
-        Home
-      </Link>
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="absolute left-0 top-full w-full border-t border-[#e8e6df] bg-[#faf9f6] px-5 py-4 shadow-md md:hidden">
+            <div className="flex flex-col gap-4">
+              <Link href="/" onClick={() => setIsMenuOpen(false)}>
+                Home
+              </Link>
 
-      <Link href="/books" onClick={() => setIsMenuOpen(false)}>
-        All Books
-      </Link>
+              <Link href="/books" onClick={() => setIsMenuOpen(false)}>
+                All Books
+              </Link>
 
-      {!isPending && session && (
-        <>
-          <Link href="/add-book" onClick={() => setIsMenuOpen(false)}>
-            Add Book
-          </Link>
+              {!isPending && session && (
+                <>
+                  <Link href="/add-book" onClick={() => setIsMenuOpen(false)}>
+                    Add Book
+                  </Link>
 
-          <Link href="/my-books" onClick={() => setIsMenuOpen(false)}>
-            My Books
-          </Link>
+                  <Link href="/my-books" onClick={() => setIsMenuOpen(false)}>
+                    My Books
+                  </Link>
 
-          <Link href="/my-borrows" onClick={() => setIsMenuOpen(false)}>
-            My Borrows
-          </Link>
+                  <Link href="/my-borrows" onClick={() => setIsMenuOpen(false)}>
+                    My Borrows
+                  </Link>
 
-          <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
-            My Profile
-          </Link>
+                  <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
+                    My Profile
+                  </Link>
 
-          <button onClick={handleLogout} className="text-left text-red-600">
-            Logout
-          </button>
-        </>
-      )}
+                  <button
+                    onClick={handleLogout}
+                    className="text-left text-red-600"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
 
-      {!isPending && !session && (
-        <>
-          <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-            Login
-          </Link>
+              {!isPending && !session && (
+                <>
+                  <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                    Login
+                  </Link>
 
-          <Link href="/register" onClick={() => setIsMenuOpen(false)}>
-            Register
-          </Link>
-        </>
-      )}
-    </div>
-  </div>
-)}
-
+                  <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+                    Register
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
     </header>
   );

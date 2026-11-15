@@ -1,56 +1,71 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-     console.log("Email login clicked");
 
     setIsLoading(true);
     setErrorMessage("");
 
-    const { error } = await authClient.signIn.email({
-      email,
-      password,
-    });
+    try {
+      const { error } = await authClient.signIn.email({
+        email,
+        password,
+      });
 
-  
+      if (error) {
+        const message = error.message || "Invalid email or password";
+        setErrorMessage(message);
+        toast.error(message);
+        return;
+      }
 
-    if (error) {
-      setErrorMessage(error.message || "Login failed.");
+      // Get the original destination
+      const params = new URLSearchParams(window.location.search);
+      const requestedCallback = params.get("callbackUrl");
+
+      // Only allow internal application URLs
+      const callbackURL =
+        requestedCallback?.startsWith("/") &&
+        !requestedCallback.startsWith("//")
+          ? requestedCallback
+          : "/";
+
+      toast.success("Login successful!");
+
+      // Perform a full navigation after login
+      window.location.assign(callbackURL);
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-await authClient.getSession();
-
-const callbackURL =
-  new URLSearchParams(window.location.search).get("callbackURL") || "/";
-
-setIsLoading(false);
-router.replace(callbackURL);
   };
-  const handleGoogleLogin = async () => {
-      console.log("Google login clicked");
- const callbackURL =
-  new URLSearchParams(window.location.search).get("callbackURL") || "/";
 
-  const { error } = await authClient.signIn.social({
-  provider: "google",
-  callbackURL,
-  });
+  const handleGoogleLogin = async () => {
+    const callbackURL =
+      new URLSearchParams(window.location.search).get("callbackUrl") || "/";
+
+    const { error } = await authClient.signIn.social({
+      provider: "google",
+      callbackURL,
+    });
 
     if (error) {
       setErrorMessage(error.message || "Google login failed.");
+      toast.error("Google login failed.");
     }
   };
   return (
@@ -95,13 +110,13 @@ router.replace(callbackURL);
             />
           </div>
           <div className="flex justify-end">
-  <Link
-    href="/forgot-password"
-    className="text-sm font-medium text-green-700 hover:underline"
-  >
-    Forgot Password?
-  </Link>
-</div>
+            <Link
+              href="/forgot-password"
+              className="text-sm font-medium text-green-700 hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </div>
           {errorMessage && (
             <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
               {errorMessage}
@@ -117,14 +132,14 @@ router.replace(callbackURL);
           </button>
         </form>
         <p className="mt-5 text-center text-sm text-gray-600">
-  Don&apos;t have an account?{" "}
-  <Link
-    href="/register"
-    className="font-semibold text-green-700 hover:underline"
-  >
-    Register
-  </Link>
-</p>
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/register"
+            className="font-semibold text-green-700 hover:underline"
+          >
+            Register
+          </Link>
+        </p>
         <div className="mt-5">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">

@@ -44,9 +44,7 @@ export default function BookCard({
           {title}
         </h3>
 
-        <p className="mt-2 truncate text-sm text-gray-600">
-          By {author}
-        </p>
+        <p className="mt-2 truncate text-sm text-gray-600">By {author}</p>
 
         <p className="mt-3 text-sm font-medium text-green-700">
           Available Copies: {availableCopies}
@@ -54,7 +52,8 @@ export default function BookCard({
 
         <Link
           href={`/books/${id}`}
-          className="mt-auto block rounded-lg bg-green-700 px-4 py-3 text-center font-medium text-white transition hover:bg-green-800">
+          className="mt-auto block rounded-lg bg-green-700 px-4 py-3 text-center font-medium text-white transition hover:bg-green-800"
+        >
           View Details
         </Link>
       </div>

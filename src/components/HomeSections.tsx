@@ -1,4 +1,3 @@
-
 import {
   Search,
   BookOpen,
@@ -20,8 +19,7 @@ const borrowingSteps = [
   {
     icon: BookOpen,
     title: "Borrow a Book",
-    description:
-      "Choose your favorite book and borrow it for a few days.",
+    description: "Choose your favorite book and borrow it for a few days.",
     number: "02",
   },
   {
@@ -37,26 +35,22 @@ const benefits = [
   {
     icon: Library,
     title: "Wide Collection",
-    description:
-      "Discover books from different genres and categories.",
+    description: "Discover books from different genres and categories.",
   },
   {
     icon: Clock,
     title: "Easy Borrowing",
-    description:
-      "Borrow your favorite books with just a few clicks.",
+    description: "Borrow your favorite books with just a few clicks.",
   },
   {
     icon: Heart,
     title: "Personal Library",
-    description:
-      "Keep track of your borrowed books in one place.",
+    description: "Keep track of your borrowed books in one place.",
   },
   {
     icon: Sparkles,
     title: "Reading Made Simple",
-    description:
-      "Enjoy a simple and comfortable online library experience.",
+    description: "Enjoy a simple and comfortable online library experience.",
   },
 ];
 
@@ -76,8 +70,8 @@ export default function HomeSections() {
             </h2>
 
             <p className="mx-auto mt-4 max-w-xl text-gray-600">
-              Getting your next favorite book is easier than ever.
-              Follow these three simple steps.
+              Getting your next favorite book is easier than ever. Follow these
+              three simple steps.
             </p>
           </div>
 
@@ -125,8 +119,8 @@ export default function HomeSections() {
             </h2>
 
             <p className="mx-auto mt-4 max-w-xl text-gray-600">
-              Everything you need to make your reading journey
-              enjoyable and organized.
+              Everything you need to make your reading journey enjoyable and
+              organized.
             </p>
           </div>
 
@@ -159,4 +153,3 @@ export default function HomeSections() {
     </>
   );
 }
-

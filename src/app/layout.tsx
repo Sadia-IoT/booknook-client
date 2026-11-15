@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -20,13 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
-          <Toaster position="top-right" />
-         <Navbar />
+        <Toaster position="top-right" />
+        <Navbar />
         {children}
         <Footer />
-        </body>
+      </body>
     </html>
   );
 }

@@ -4,44 +4,42 @@ import { jwt } from "better-auth/plugins";
 import { db, client } from "./mongodb";
 import { Resend } from "resend";
 
-
 const resend = new Resend(process.env.RESEND_API_KEY);
 console.log("BETTER_AUTH_URL:", process.env.BETTER_AUTH_URL);
 console.log("NODE_ENV:", process.env.NODE_ENV);
 
 export const auth = betterAuth({
-  baseURL:
-    process.env.BETTER_AUTH_URL || "http://localhost:3000",
-    trustedOrigins: [
+  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  trustedOrigins: [
     "http://localhost:3000",
     "https://booknook-client-phi.vercel.app",
   ],
 
   database: mongodbAdapter(db, { client }),
   account: {
-  accountLinking: {
-    enabled: true,
-    trustedProviders: ["google", "github"],
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "github"],
+    },
   },
-},
-emailAndPassword: {
-  enabled: true,
-  minPasswordLength: 6,
+  emailAndPassword: {
+    enabled: true,
+    minPasswordLength: 6,
 
-  sendResetPassword: async ({ user, url }) => {
-    await resend.emails.send({
-      from: "BookNook <onboarding@resend.dev>",
-      to: user.email,
-      subject: "Reset your BookNook Password",
-      html: `
+    sendResetPassword: async ({ user, url }) => {
+      await resend.emails.send({
+        from: "BookNook <onboarding@resend.dev>",
+        to: user.email,
+        subject: "Reset your BookNook Password",
+        html: `
         <h2>Password Reset</h2>
         <p>You requested to reset your BookNook password.</p>
         <p>Click the link below to reset your password:</p>
         <a href="${url}">Reset Password</a>
       `,
-    });
+      });
+    },
   },
-},
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,

@@ -118,7 +118,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-12 border-t border-green-200 pt-6 text-center">
           <p className="text-sm text-gray-600">
-            © BookNook. All rights reserved.
+            © 2026  BookNook. All rights reserved.
           </p>
         </div>
       </div>
